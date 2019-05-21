@@ -673,6 +673,73 @@ int32_t json_object_get_int(const struct json_object *jso)
   }
 }
 
+uint32_t json_object_get_uint32(const struct json_object *jso)
+{
+    int64_t cint64;
+    enum json_type o_type;
+
+    if(!jso) return 0;
+
+    o_type = jso->o_type;
+    cint64 = jso->o.c_int64;
+
+    if (o_type == json_type_string)
+    {
+        /*
+         * Parse strings into 64-bit numbers, then use the
+         * 64-to-32-bit number handling below.
+         */
+        if (json_parse_int64(get_string_component(jso), &cint64) != 0)
+            return 0; /* whoops, it didn't work. */
+        o_type = json_type_int;
+    }
+
+    switch(o_type) {
+        case json_type_int:
+            /* Make sure we return the correct values for out of range numbers. */
+            return (uint32_t) cint64;
+        case json_type_double:
+            return (uint32_t)jso->o.c_double;
+        case json_type_boolean:
+            return jso->o.c_boolean;
+        default:
+            return 0;
+    }
+}
+uint64_t json_object_get_uint64(const struct json_object *jso)
+{
+    int64_t cint64;
+    enum json_type o_type;
+
+    if(!jso) return 0;
+
+    o_type = jso->o_type;
+    cint64 = jso->o.c_int64;
+
+    if (o_type == json_type_string)
+    {
+        /*
+         * Parse strings into 64-bit numbers, then use the
+         * 64-to-32-bit number handling below.
+         */
+        if (json_parse_int64(get_string_component(jso), &cint64) != 0)
+            return 0; /* whoops, it didn't work. */
+        o_type = json_type_int;
+    }
+
+    switch(o_type) {
+        case json_type_int:
+            /* Make sure we return the correct values for out of range numbers. */
+            return (uint64_t) cint64;
+        case json_type_double:
+            return (uint64_t)jso->o.c_double;
+        case json_type_boolean:
+            return jso->o.c_boolean;
+        default:
+            return 0;
+    }
+}
+
 int json_object_set_int(struct json_object *jso,int new_value){
 	if (!jso || jso->o_type!=json_type_int)
 		return 0;

@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 2.8)
 # JSON-C library is C only project.
 project(json-c C)
 
+add_definitions(-DBUILD_SHARED_LIBS=OFF)
+set(CMAKE_MACOSX_RPATH 1)
 # If we've got 3.0 then it's good, let's provide support. Otherwise, leave it be.
 if(POLICY CMP0038)
   # Policy CMP0038 introduced was in CMake 3.0
@@ -245,7 +247,7 @@ add_library(${PROJECT_NAME}
     ${JSON_C_SOURCES}
     ${JSON_C_HEADERS}
 )
-
+target_link_libraries(${PROJECT_NAME})
 # If json-c is used as subroject it set to target correct interface -I flags and allow
 # to build external target without extra include_directories(...)
 set_property(TARGET ${PROJECT_NAME} PROPERTY

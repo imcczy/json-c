@@ -58,7 +58,8 @@ array_list_free(struct array_list *arr)
 {
   size_t i;
   for(i = 0; i < arr->length; i++)
-    if(arr->array[i]) arr->free_fn(arr->array[i]);
+    if(arr->array[i])
+        arr->free_fn(arr->array[i]);
   free(arr->array);
   free(arr);
 }

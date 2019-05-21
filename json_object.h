@@ -714,7 +714,7 @@ JSON_EXPORT struct json_object* json_object_new_int64(int64_t i);
  * @returns an int
  */
 JSON_EXPORT int32_t json_object_get_int(const struct json_object *obj);
-
+JSON_EXPORT uint32_t json_object_get_uint32(const struct json_object *jso);
 /** Set the int value of a json_object
  * 
  * The type of obj is checked to be a json_type_int and 0 is returned 
@@ -726,7 +726,7 @@ JSON_EXPORT int32_t json_object_get_int(const struct json_object *obj);
  * @returns 1 if value is set correctly, 0 otherwise
  */
 JSON_EXPORT int json_object_set_int(struct json_object *obj,int new_value);
-
+JSON_EXPORT uint64_t json_object_get_uint64(const struct json_object *jso);
 /** Increment a json_type_int object by the given amount, which may be negative.
  *
  * If the type of obj is not json_type_int then 0 is returned with no further
